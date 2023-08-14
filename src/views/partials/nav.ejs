@@ -1,0 +1,26 @@
+<nav>
+	<h1><a href="/">F-Book</a></h1>
+	<ul>
+		<% if (user) { %>
+			<li>
+				Welcome, <%= user %>
+			</li>
+
+			<li>
+				<a href="/auth/logout">Log out</a>
+			</li>
+
+			<% } else { %>
+				<li><a href="/auth/login">Log in</a></li>
+				<li><a href="/auth/signup">Sign up</a></li>
+
+				<% } %>
+	</ul>
+</nav>
+<% if (showDeleteButton) { %>
+	<div>
+		<button><a href="/books/deleteall">Delete all my book recommendations</a></button>
+		<button><a href="/books/create">New Book recommendation</a></button>
+	</div>
+	<br>
+	<% } %>

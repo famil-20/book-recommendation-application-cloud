@@ -1,0 +1,31 @@
+<%- include('./partials/head'); -%>
+
+	<body>
+		<%- include('./partials/nav'); -%>
+
+			<% if (titles.length> 0) { %>
+				<div>
+					<form action="/books/deleteAll" method="post">
+						<h2>Do you want to delete all?</h2>
+						<h3>Titles</h3>
+						<br>
+						<% titles.forEach(title=> { %>
+							<p>
+								<%= title %>
+							</p>
+							<% }) %>
+
+								<button type="submit">Delete All</button>
+								<br>
+								<a href="/books">Go back</a>
+					</form>
+				</div>
+
+				<%} else { %>
+					<h3>You have not recommended any books</h3>
+					<button><a href="/books">Go back</a></button>
+					<%}%>
+
+
+	</body>
+	<%- include('./partials/footer'); -%>

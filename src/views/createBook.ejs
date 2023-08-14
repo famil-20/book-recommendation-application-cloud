@@ -1,0 +1,59 @@
+<%- include('./partials/head'); -%>
+
+	<body>
+		<%- include('./partials/nav'); -%>
+
+			<form action="/books/create" method="post">
+				<h2>New Book recommendation</h2>
+				<label for="title">Title</label>
+				<input name="title" required />
+				<div class="title error"></div>
+
+				<label for="description">Description</label>
+				<textarea id="description" name="description" required></textarea>
+				<div class="description error"></div>
+				<button>Create</button>
+				<br>
+				<a href="/books">Go back</a>
+			</form>
+	</body>
+
+	<script>
+		const form = document.querySelector('form');
+		const titleError = document.querySelector('.title.error');
+		const descriptionError = document.querySelector('.description.error');
+
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+
+			// reset errors
+			titleError.textContent = '';
+			descriptionError.textContent = '';
+
+
+			const title = form.title.value;
+			const description = form.description.value;
+
+			try {
+				const res = await fetch('/books/create', {
+					method: 'POST',
+					body: JSON.stringify({ title, description }),
+					headers: { 'Content-Type': 'application/json' }
+				});
+				const data = await res.json();
+				if (data.errors) {
+					titleError.textContent = data.errors.title;
+					descriptionError.textContent = data.errors.description;
+				}
+				else if (data.book) {
+					location.assign('/books');
+				}
+			}
+			catch (err) {
+				console.log(err);
+			}
+		});
+
+	</script>
+
+	<%- include('./partials/footer'); -%>
